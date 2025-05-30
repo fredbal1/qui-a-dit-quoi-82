@@ -7,13 +7,15 @@ interface GlassCardProps {
   className?: string;
   hover?: boolean;
   onClick?: () => void;
+  style?: React.CSSProperties;
 }
 
 const GlassCard: React.FC<GlassCardProps> = ({ 
   children, 
   className, 
   hover = false, 
-  onClick 
+  onClick,
+  style 
 }) => {
   return (
     <div
@@ -23,6 +25,7 @@ const GlassCard: React.FC<GlassCardProps> = ({
         className
       )}
       onClick={onClick}
+      style={style}
     >
       {children}
     </div>
