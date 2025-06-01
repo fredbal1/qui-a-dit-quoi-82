@@ -1,73 +1,131 @@
-# Welcome to your Lovable project
 
-## Project info
+# 🎮 KIADISA - Qui a dit ça ?
 
-**URL**: https://lovable.dev/projects/2c9ba706-e5f7-47a1-a634-7b3bcb359cfc
+[![Build Status](https://github.com/YOUR_USERNAME/kiadisa/workflows/CI%2FCD%20Pipeline/badge.svg)](https://github.com/YOUR_USERNAME/kiadisa/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Code Quality](https://img.shields.io/badge/code%20quality-A-brightgreen.svg)](https://github.com/YOUR_USERNAME/kiadisa)
+[![Built with Lovable](https://img.shields.io/badge/Built%20with-Lovable-ff69b4.svg)](https://lovable.dev)
 
-## How can I edit this code?
+> Un jeu social multijoueur immersif, fun et stratégique où les révélations se mélangent au bluff ! 😲
 
-There are several ways of editing your application.
+## 🚀 Aperçu
 
-**Use Lovable**
+KIADISA est une application mobile PWA qui propose 4 mini-jeux originaux pour découvrir les secrets de vos amis tout en s'amusant. Créé avec amour sur [Lovable.dev](https://lovable.dev), ce projet combine design moderne et gameplay addictif.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/2c9ba706-e5f7-47a1-a634-7b3bcb359cfc) and start prompting.
+### ✨ Fonctionnalités
 
-Changes made via Lovable will be committed automatically to this repo.
+- 🎲 **4 Mini-jeux** : KiKaDi, KiDiVrai, KiDéjà, KiDeNous
+- 👥 **Multijoueur** : 2 à 8 joueurs en temps réel
+- 🎨 **Design moderne** : Glassmorphism + animations fluides
+- 📱 **Mobile-first** : PWA optimisée pour mobile
+- 🔒 **Sécurisé** : Authentification Supabase + RLS
+- ⚡ **Temps réel** : Synchronisation instantanée entre joueurs
 
-**Use your preferred IDE**
+## 🛠️ Stack Technique
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- **Frontend** : React 18 + TypeScript + Vite
+- **Styling** : Tailwind CSS + shadcn/ui
+- **Animations** : Framer Motion + GSAP
+- **Backend** : Supabase (Auth + Realtime + Database)
+- **Testing** : Vitest + Testing Library
+- **CI/CD** : GitHub Actions
+- **Deployment** : Lovable.dev + PWA
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 📦 Installation
 
-Follow these steps:
+### Prérequis
+- Node.js 18+
+- npm ou bun
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Démarrage rapide
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+```bash
+# Cloner le repository
+git clone https://github.com/YOUR_USERNAME/kiadisa.git
+cd kiadisa
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Installer les dépendances
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Configurer Husky (hooks Git)
+npm run prepare
+
+# Démarrer en développement
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### Scripts disponibles
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm run dev          # Serveur de développement
+npm run build        # Build de production
+npm run preview      # Prévisualiser le build
+npm run lint         # Vérifier le code (ESLint)
+npm run format       # Formater le code (Prettier)
+npm run format:check # Vérifier le formatage
+npm run test         # Lancer les tests
+npm run test:watch   # Tests en mode watch
+npm run audit        # Audit de sécurité
+npm run validate     # Lint + format + test + build
+```
 
-**Use GitHub Codespaces**
+## 🎮 Comment jouer
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+1. **Créer une partie** : Choisissez le mode, l'ambiance et les mini-jeux
+2. **Inviter des amis** : Partagez le code de partie (6 caractères)
+3. **Jouer ensemble** : Chaque manche = 1 mini-jeu avec 5 phases
+4. **Gagner des points** : Bluffez, devinez, accusez pour marquer
+5. **Débloquer du contenu** : Utilisez vos pièces dans la boutique
 
-## What technologies are used for this project?
+## 📁 Structure du projet
 
-This project is built with:
+```
+src/
+├── components/         # Composants UI réutilisables
+│   ├── ui/            # shadcn/ui components
+│   └── games/         # Composants de mini-jeux
+├── pages/             # Pages de l'application
+├── hooks/             # Hooks React personnalisés
+├── lib/               # Utilitaires et helpers
+├── types/             # Définitions TypeScript
+└── __tests__/         # Tests unitaires
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Voir [README_STRUCTURE.md](./README_STRUCTURE.md) pour plus de détails.
 
-## How can I deploy this project?
+## 🤝 Contribution
 
-Simply open [Lovable](https://lovable.dev/projects/2c9ba706-e5f7-47a1-a634-7b3bcb359cfc) and click on Share -> Publish.
+1. Fork le projet
+2. Créez votre branche (`git checkout -b feature/amazing-feature`)
+3. Committez vos changements (`git commit -m 'Add amazing feature'`)
+4. Pushez vers la branche (`git push origin feature/amazing-feature`)
+5. Ouvrez une Pull Request
 
-## Can I connect a custom domain to my Lovable project?
+### Standards de qualité
 
-Yes, you can!
+- Tests unitaires requis (`npm run test`)
+- Code formaté avec Prettier (`npm run format`)
+- Lint ESLint sans erreurs (`npm run lint`)
+- Build sans erreurs (`npm run build`)
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## 🔗 Liens utiles
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- 🎨 **Lovable.dev** : [Editeur en ligne](https://lovable.dev)
+- 📚 **Documentation** : [README_STRUCTURE.md](./README_STRUCTURE.md)
+- 🐛 **Issues** : [GitHub Issues](https://github.com/YOUR_USERNAME/kiadisa/issues)
+- 💬 **Discussions** : [GitHub Discussions](https://github.com/YOUR_USERNAME/kiadisa/discussions)
+
+## 📄 Licence
+
+Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
+
+## 🌟 Remerciements
+
+- [Lovable.dev](https://lovable.dev) pour l'excellent environnement de développement
+- [shadcn/ui](https://ui.shadcn.com) pour les composants UI
+- [Supabase](https://supabase.com) pour le backend
+- La communauté open source pour les outils utilisés
+
+---
+
+**Fait avec ❤️ et [Lovable.dev](https://lovable.dev)**
