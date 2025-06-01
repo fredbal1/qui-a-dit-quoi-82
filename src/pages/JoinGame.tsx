@@ -102,7 +102,7 @@ const JoinGame = () => {
                     value={gameCode}
                     onChange={(e) => handleCodeChange(e.target.value)}
                     placeholder="ABCD12"
-                    className="glass-card border-white/30 text-white placeholder:text-white/60 text-center text-xl font-mono tracking-widest"
+                    className="bg-white/95 border-white/50 text-gray-900 placeholder:text-gray-500 text-center text-xl font-mono tracking-widest"
                     maxLength={6}
                   />
                   <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
@@ -128,18 +128,17 @@ const JoinGame = () => {
           </GlassCard>
 
           {/* Demo Code */}
-          <GlassCard className="bg-blue-500/20 border-blue-300/30 animate-slide-up">
+          <GlassCard className="bg-blue-600/30 border-blue-300/50 animate-slide-up">
             <div className="text-center">
-              <h3 className="font-poppins font-semibold text-blue-100 mb-2">
+              <h3 className="font-poppins font-semibold text-white mb-2">
                 💡 Code de démonstration
               </h3>
-              <p className="text-blue-100/80 text-sm font-inter mb-3">
+              <p className="text-white/90 text-sm font-inter mb-3">
                 Pour tester l'application, utilise le code :
               </p>
               <Button
                 onClick={() => handleCodeChange('DEMO01')}
-                variant="outline"
-                className="border-blue-300/50 text-blue-100 hover:bg-blue-500/20 font-mono tracking-wider"
+                className="bg-white/20 border-white/50 text-white hover:bg-white/30 font-mono tracking-wider text-lg px-6 py-2"
               >
                 DEMO01
               </Button>

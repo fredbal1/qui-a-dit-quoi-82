@@ -76,13 +76,13 @@ const Auth = () => {
           <GlassCard className="animate-slide-up">
             <Tabs defaultValue="guest" className="w-full">
               <TabsList className="grid w-full grid-cols-3 glass-card border-white/20">
-                <TabsTrigger value="signin" className="text-white data-[state=active]:bg-white/20">
+                <TabsTrigger value="signin" className="text-white data-[state=active]:bg-white/20 data-[state=active]:text-white">
                   Connexion
                 </TabsTrigger>
-                <TabsTrigger value="signup" className="text-white data-[state=active]:bg-white/20">
+                <TabsTrigger value="signup" className="text-white data-[state=active]:bg-white/20 data-[state=active]:text-white">
                   Inscription
                 </TabsTrigger>
-                <TabsTrigger value="guest" className="text-white data-[state=active]:bg-white/20">
+                <TabsTrigger value="guest" className="text-white data-[state=active]:bg-white/20 data-[state=active]:text-white">
                   Invité
                 </TabsTrigger>
               </TabsList>
@@ -91,12 +91,12 @@ const Auth = () => {
                 <div className="space-y-2">
                   <Label htmlFor="signin-email" className="text-white font-inter">Email</Label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-3 w-4 h-4 text-white/60" />
+                    <Mail className="absolute left-3 top-3 w-4 h-4 text-gray-600 z-10" />
                     <Input
                       id="signin-email"
                       type="email"
                       placeholder="ton.email@example.com"
-                      className="pl-10 glass-card border-white/30 text-white placeholder:text-white/60"
+                      className="pl-10 bg-white/95 border-white/50 text-gray-900 placeholder:text-gray-500"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
@@ -105,12 +105,12 @@ const Auth = () => {
                 <div className="space-y-2">
                   <Label htmlFor="signin-password" className="text-white font-inter">Mot de passe</Label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-3 w-4 h-4 text-white/60" />
+                    <Lock className="absolute left-3 top-3 w-4 h-4 text-gray-600 z-10" />
                     <Input
                       id="signin-password"
                       type="password"
                       placeholder="••••••••"
-                      className="pl-10 glass-card border-white/30 text-white placeholder:text-white/60"
+                      className="pl-10 bg-white/95 border-white/50 text-gray-900 placeholder:text-gray-500"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
@@ -130,11 +130,11 @@ const Auth = () => {
                 <div className="space-y-2">
                   <Label htmlFor="signup-pseudo" className="text-white font-inter">Pseudo</Label>
                   <div className="relative">
-                    <User className="absolute left-3 top-3 w-4 h-4 text-white/60" />
+                    <User className="absolute left-3 top-3 w-4 h-4 text-gray-600 z-10" />
                     <Input
                       id="signup-pseudo"
                       placeholder="TonPseudo"
-                      className="pl-10 glass-card border-white/30 text-white placeholder:text-white/60"
+                      className="pl-10 bg-white/95 border-white/50 text-gray-900 placeholder:text-gray-500"
                       value={pseudo}
                       onChange={(e) => setPseudo(e.target.value)}
                     />
@@ -143,12 +143,12 @@ const Auth = () => {
                 <div className="space-y-2">
                   <Label htmlFor="signup-email" className="text-white font-inter">Email</Label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-3 w-4 h-4 text-white/60" />
+                    <Mail className="absolute left-3 top-3 w-4 h-4 text-gray-600 z-10" />
                     <Input
                       id="signup-email"
                       type="email"
                       placeholder="ton.email@example.com"
-                      className="pl-10 glass-card border-white/30 text-white placeholder:text-white/60"
+                      className="pl-10 bg-white/95 border-white/50 text-gray-900 placeholder:text-gray-500"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
@@ -157,12 +157,12 @@ const Auth = () => {
                 <div className="space-y-2">
                   <Label htmlFor="signup-password" className="text-white font-inter">Mot de passe</Label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-3 w-4 h-4 text-white/60" />
+                    <Lock className="absolute left-3 top-3 w-4 h-4 text-gray-600 z-10" />
                     <Input
                       id="signup-password"
                       type="password"
                       placeholder="••••••••"
-                      className="pl-10 glass-card border-white/30 text-white placeholder:text-white/60"
+                      className="pl-10 bg-white/95 border-white/50 text-gray-900 placeholder:text-gray-500"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
@@ -182,11 +182,11 @@ const Auth = () => {
                 <div className="space-y-2">
                   <Label htmlFor="guest-pseudo" className="text-white font-inter">Pseudo</Label>
                   <div className="relative">
-                    <User className="absolute left-3 top-3 w-4 h-4 text-white/60" />
+                    <User className="absolute left-3 top-3 w-4 h-4 text-gray-600 z-10" />
                     <Input
                       id="guest-pseudo"
                       placeholder="TonPseudo"
-                      className="pl-10 glass-card border-white/30 text-white placeholder:text-white/60"
+                      className="pl-10 bg-white/95 border-white/50 text-gray-900 placeholder:text-gray-500"
                       value={pseudo}
                       onChange={(e) => setPseudo(e.target.value)}
                     />

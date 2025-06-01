@@ -122,16 +122,14 @@ const Lobby = () => {
           <div className="flex space-x-3 justify-center">
             <Button
               onClick={copyGameCode}
-              variant="outline"
-              className="border-white/30 text-white hover:bg-white/20"
+              className="bg-white/20 border-white/50 text-white hover:bg-white/30 hover:scale-105 transition-all duration-200"
             >
               <Copy className="w-4 h-4 mr-2" />
               Copier
             </Button>
             <Button
               onClick={shareGame}
-              variant="outline"
-              className="border-white/30 text-white hover:bg-white/20"
+              className="bg-white/20 border-white/50 text-white hover:bg-white/30 hover:scale-105 transition-all duration-200"
             >
               <Share className="w-4 h-4 mr-2" />
               Partager
