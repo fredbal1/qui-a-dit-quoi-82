@@ -1,17 +1,18 @@
-import { render, screen } from '@testing-library/react';
+
+import { render } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import GlassCard from '@/components/GlassCard';
 
 describe('GlassCard', () => {
   it('renders children correctly', () => {
-    render(
+    const { getByText } = render(
       <GlassCard>
         <p>Test content</p>
       </GlassCard>
     );
     
-    expect(screen.getByText('Test content')).toBeInTheDocument();
+    expect(getByText('Test content')).toBeInTheDocument();
   });
 
   it('applies custom className', () => {
@@ -30,13 +31,13 @@ describe('GlassCard', () => {
     const user = userEvent.setup();
     const handleClick = vi.fn();
     
-    render(
+    const { getByText } = render(
       <GlassCard onClick={handleClick}>
         <p>Clickable card</p>
       </GlassCard>
     );
     
-    const card = screen.getByText('Clickable card').parentElement;
+    const card = getByText('Clickable card').parentElement;
     await user.click(card!);
     
     expect(handleClick).toHaveBeenCalledTimes(1);
