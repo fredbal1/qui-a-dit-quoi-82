@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { AlertCircle, RefreshCw } from 'lucide-react';
@@ -14,7 +13,7 @@ const ErrorFallback: React.FC<ErrorFallbackProps> = ({ error, resetError }) => {
   const isDev = import.meta.env.DEV;
 
   return (
-    <AnimatedBackground variant="error">
+    <AnimatedBackground variant="auth">
       <div className="min-h-screen flex items-center justify-center p-4">
         <GlassCard className="max-w-md text-center">
           <div className="mb-6">
