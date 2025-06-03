@@ -1,0 +1,505 @@
+
+{
+  "metadata": {
+    "description": "Exemple complet d'une partie KIADISA avec tous les mocks",
+    "created_at": "2025-06-03T14:30:00Z",
+    "version": "1.0"
+  },
+  
+  "users": [
+    {
+      "id": "user_001",
+      "pseudo": "Alex",
+      "avatar": "🎮",
+      "email": "alex@example.com",
+      "created_at": "2025-06-01T10:00:00Z"
+    },
+    {
+      "id": "user_002", 
+      "pseudo": "Marie",
+      "avatar": "🌟",
+      "email": "marie@example.com",
+      "created_at": "2025-06-02T09:15:00Z"
+    },
+    {
+      "id": "user_003",
+      "pseudo": "Julien", 
+      "avatar": "🎯",
+      "email": "julien@example.com",
+      "created_at": "2025-06-02T11:30:00Z"
+    }
+  ],
+
+  "gameState": {
+    "id": "game_abc123",
+    "code": "ABC123",
+    "status": "playing",
+    "currentRound": 2,
+    "totalRounds": 4,
+    "currentGame": "kidivrai",
+    "phase": "vote",
+    "host": "user_001",
+    "createdAt": "2025-06-03T14:00:00Z",
+    "settings": {
+      "mode": "classique",
+      "ambiance": "safe",
+      "miniGames": ["kikadi", "kidivrai", "kideja", "kidenous"],
+      "rounds": 4,
+      "maxPlayers": 8
+    }
+  },
+
+  "players": [
+    {
+      "id": "user_001",
+      "pseudo": "Alex",
+      "avatar": "🎮", 
+      "isHost": true,
+      "score": 5,
+      "xp": 2150,
+      "level": 21,
+      "coins": 340
+    },
+    {
+      "id": "user_002",
+      "pseudo": "Marie",
+      "avatar": "🌟",
+      "isHost": false, 
+      "score": 7,
+      "xp": 1980,
+      "level": 19,
+      "coins": 290
+    },
+    {
+      "id": "user_003",
+      "pseudo": "Julien",
+      "avatar": "🎯",
+      "isHost": false,
+      "score": 4,
+      "xp": 1750,
+      "level": 17,
+      "coins": 180
+    }
+  ],
+
+  "miniGames": [
+    {
+      "id": "kikadi",
+      "name": "KiKaDi",
+      "description": "Devinez qui a écrit quoi !",
+      "emoji": "🧠",
+      "type": "kikadi",
+      "phases": [
+        {"type": "intro", "duration": 5},
+        {"type": "answer", "duration": 60},
+        {"type": "vote", "duration": 45},
+        {"type": "reveal", "duration": 3},
+        {"type": "results", "duration": 5}
+      ]
+    },
+    {
+      "id": "kidivrai", 
+      "name": "KiDiVrai",
+      "description": "Vérité ou bluff ? À vous de voir !",
+      "emoji": "😏",
+      "type": "kidivrai",
+      "phases": [
+        {"type": "intro", "duration": 5},
+        {"type": "answer", "duration": 90},
+        {"type": "vote", "duration": 60},
+        {"type": "reveal", "duration": 3},
+        {"type": "results", "duration": 5}
+      ]
+    },
+    {
+      "id": "kideja",
+      "name": "KiDéjà", 
+      "description": "Qui a déjà fait ça ?",
+      "emoji": "🤭",
+      "type": "kideja",
+      "phases": [
+        {"type": "intro", "duration": 5},
+        {"type": "answer", "duration": 30},
+        {"type": "vote", "duration": 60},
+        {"type": "reveal", "duration": 3},
+        {"type": "results", "duration": 5}
+      ]
+    },
+    {
+      "id": "kidenous",
+      "name": "KiDeNous",
+      "description": "Qui correspond le mieux ?", 
+      "emoji": "😱",
+      "type": "kidenous",
+      "phases": [
+        {"type": "intro", "duration": 5},
+        {"type": "vote", "duration": 45},
+        {"type": "reveal", "duration": 3},
+        {"type": "results", "duration": 5}
+      ]
+    }
+  ],
+
+  "rounds": [
+    {
+      "id": "round_001",
+      "gameId": "game_abc123",
+      "roundNumber": 1,
+      "miniGameId": "kikadi",
+      "questionId": "q_kikadi_001",
+      "status": "completed",
+      "startedAt": "2025-06-03T14:05:00Z",
+      "completedAt": "2025-06-03T14:08:30Z"
+    },
+    {
+      "id": "round_002", 
+      "gameId": "game_abc123",
+      "roundNumber": 2,
+      "miniGameId": "kidivrai", 
+      "questionId": "q_kidivrai_001",
+      "status": "playing",
+      "startedAt": "2025-06-03T14:09:00Z",
+      "completedAt": null
+    }
+  ],
+
+  "questions": [
+    {
+      "id": "q_kikadi_001",
+      "text": "Quelle est votre citation inspirante préférée ?",
+      "category": "inspiration",
+      "ambiance": "safe",
+      "gameType": "kikadi"
+    },
+    {
+      "id": "q_kidivrai_001", 
+      "text": "Raconte-nous ton plus gros mensonge d'enfance",
+      "category": "childhood",
+      "ambiance": "safe",
+      "gameType": "kidivrai"
+    },
+    {
+      "id": "q_kideja_001",
+      "text": "Qui a déjà mangé quelque chose qui était tombé par terre ?", 
+      "category": "embarrassing",
+      "ambiance": "safe",
+      "gameType": "kideja"
+    },
+    {
+      "id": "q_kidenous_001",
+      "text": "Qui de vous est le plus peureux ?",
+      "category": "personality", 
+      "ambiance": "safe",
+      "gameType": "kidenous"
+    }
+  ],
+
+  "answers": [
+    {
+      "id": "answer_001",
+      "playerId": "user_001",
+      "roundId": "round_001", 
+      "content": "La vie est belle quand on sait la regarder",
+      "isBluff": false,
+      "timestamp": "2025-06-03T14:06:15Z"
+    },
+    {
+      "id": "answer_002",
+      "playerId": "user_002",
+      "roundId": "round_001",
+      "content": "Chaque jour est une nouvelle aventure",
+      "isBluff": false,
+      "timestamp": "2025-06-03T14:06:22Z"
+    },
+    {
+      "id": "answer_003", 
+      "playerId": "user_003",
+      "roundId": "round_001",
+      "content": "Il faut toujours croire en ses rêves",
+      "isBluff": false,
+      "timestamp": "2025-06-03T14:06:35Z"
+    },
+    {
+      "id": "answer_004",
+      "playerId": "user_001", 
+      "roundId": "round_002",
+      "content": "J'ai dit à mes parents que j'avais mangé mes légumes alors que je les avais cachés sous mon lit pendant des semaines.",
+      "isBluff": true,
+      "timestamp": "2025-06-03T14:10:20Z"
+    },
+    {
+      "id": "answer_005",
+      "playerId": "user_002",
+      "roundId": "round_002",
+      "content": "J'ai convaincu ma maitresse que mon chien avait mangé mes devoirs, alors que je n'avais même pas de chien.",
+      "isBluff": false,
+      "timestamp": "2025-06-03T14:10:45Z"
+    }
+  ],
+
+  "votes": [
+    {
+      "id": "vote_001",
+      "playerId": "user_002",
+      "targetPlayerId": "user_001",
+      "answerId": "answer_001",
+      "voteType": "guess",
+      "roundId": "round_001", 
+      "timestamp": "2025-06-03T14:07:30Z"
+    },
+    {
+      "id": "vote_002",
+      "playerId": "user_003",
+      "targetPlayerId": "user_002", 
+      "answerId": "answer_002",
+      "voteType": "guess",
+      "roundId": "round_001",
+      "timestamp": "2025-06-03T14:07:45Z"
+    },
+    {
+      "id": "vote_003",
+      "playerId": "user_001",
+      "targetPlayerId": "user_003",
+      "answerId": "answer_003",
+      "voteType": "guess", 
+      "roundId": "round_001",
+      "timestamp": "2025-06-03T14:07:50Z"
+    },
+    {
+      "id": "vote_004",
+      "playerId": "user_002",
+      "targetPlayerId": "user_001",
+      "answerId": "answer_004", 
+      "voteType": "bluff",
+      "roundId": "round_002",
+      "timestamp": "2025-06-03T14:11:15Z"
+    },
+    {
+      "id": "vote_005",
+      "playerId": "user_003",
+      "targetPlayerId": "user_002",
+      "answerId": "answer_005",
+      "voteType": "truth",
+      "roundId": "round_002", 
+      "timestamp": "2025-06-03T14:11:20Z"
+    }
+  ],
+
+  "roundScores": [
+    {
+      "roundId": "round_001",
+      "playerId": "user_001", 
+      "points": 1,
+      "reason": "Bonne association",
+      "timestamp": "2025-06-03T14:08:30Z"
+    },
+    {
+      "roundId": "round_001",
+      "playerId": "user_002",
+      "points": 1,
+      "reason": "Bonne association", 
+      "timestamp": "2025-06-03T14:08:30Z"
+    },
+    {
+      "roundId": "round_001",
+      "playerId": "user_003",
+      "points": 1,
+      "reason": "Bonne association",
+      "timestamp": "2025-06-03T14:08:30Z"
+    }
+  ],
+
+  "shopItems": [
+    {
+      "id": "avatar_001",
+      "name": "Dragon Mystique", 
+      "type": "avatar",
+      "price": 50,
+      "emoji": "🐉",
+      "description": "Un avatar légendaire avec des effets de particules",
+      "rarity": "legendary"
+    },
+    {
+      "id": "avatar_002",
+      "name": "Licorne Magique",
+      "type": "avatar", 
+      "price": 30,
+      "emoji": "🦄",
+      "description": "Avatar rare avec animation arc-en-ciel",
+      "rarity": "epic"
+    },
+    {
+      "id": "title_001",
+      "name": "Maître du Bluff",
+      "type": "title",
+      "price": 100,
+      "emoji": "🎭", 
+      "description": "Titre pour les experts en tromperie",
+      "rarity": "rare"
+    },
+    {
+      "id": "title_002",
+      "name": "Détective",
+      "type": "title",
+      "price": 75,
+      "emoji": "🕵️",
+      "description": "Pour ceux qui démasquent tous les menteurs",
+      "rarity": "rare"
+    },
+    {
+      "id": "effect_001", 
+      "name": "Confettis de Victoire",
+      "type": "effect",
+      "price": 25,
+      "emoji": "🎉",
+      "description": "Effet spécial quand vous gagnez une manche",
+      "rarity": "common"
+    }
+  ],
+
+  "userStats": [
+    {
+      "userId": "user_001",
+      "gamesPlayed": 45,
+      "gamesWon": 28,
+      "bluffsDetected": 67,
+      "bluffsSuccessful": 23,
+      "bestStreak": 8,
+      "totalXP": 2150,
+      "level": 21,
+      "coins": 340,
+      "titles": ["title_001", "title_002"],
+      "achievements": ["first_win", "bluff_master", "detective", "social_butterfly"]
+    },
+    {
+      "userId": "user_002", 
+      "gamesPlayed": 38,
+      "gamesWon": 15,
+      "bluffsDetected": 45,
+      "bluffsSuccessful": 31,
+      "bestStreak": 5,
+      "totalXP": 1980,
+      "level": 19,
+      "coins": 290,
+      "titles": ["title_001"],
+      "achievements": ["first_win", "bluff_master"]
+    },
+    {
+      "userId": "user_003",
+      "gamesPlayed": 29,
+      "gamesWon": 12, 
+      "bluffsDetected": 38,
+      "bluffsSuccessful": 18,
+      "bestStreak": 4,
+      "totalXP": 1750,
+      "level": 17,
+      "coins": 180,
+      "titles": [],
+      "achievements": ["first_win"]
+    }
+  ],
+
+  "userPurchases": [
+    {
+      "userId": "user_001",
+      "itemId": "title_001", 
+      "purchasedAt": "2025-05-15T16:20:00Z",
+      "price": 100
+    },
+    {
+      "userId": "user_001",
+      "itemId": "title_002",
+      "purchasedAt": "2025-05-20T14:10:00Z",
+      "price": 75
+    },
+    {
+      "userId": "user_002",
+      "itemId": "title_001",
+      "purchasedAt": "2025-05-25T11:30:00Z", 
+      "price": 100
+    }
+  ],
+
+  "achievements": [
+    {
+      "id": "first_win",
+      "name": "Première Victoire",
+      "description": "Gagner sa première partie",
+      "emoji": "🏆",
+      "rarity": "common"
+    },
+    {
+      "id": "bluff_master",
+      "name": "Maître du Bluff", 
+      "description": "Réussir 10 bluffs consécutifs",
+      "emoji": "🎭",
+      "rarity": "rare"
+    },
+    {
+      "id": "detective",
+      "name": "Super Détective",
+      "description": "Détecter 50 bluffs",
+      "emoji": "🕵️",
+      "rarity": "epic"
+    },
+    {
+      "id": "social_butterfly",
+      "name": "Papillon Social",
+      "description": "Jouer 50 parties",
+      "emoji": "🦋", 
+      "rarity": "legendary"
+    }
+  ],
+
+  "gameHistory": [
+    {
+      "gameId": "game_xyz789",
+      "playerId": "user_001",
+      "finalScore": 12,
+      "finalPosition": 1,
+      "xpGained": 125,
+      "coinsGained": 120,
+      "completedAt": "2025-06-02T20:45:00Z"
+    },
+    {
+      "gameId": "game_xyz789", 
+      "playerId": "user_002",
+      "finalScore": 8,
+      "finalPosition": 2,
+      "xpGained": 100,
+      "coinsGained": 80,
+      "completedAt": "2025-06-02T20:45:00Z"
+    },
+    {
+      "gameId": "game_xyz789",
+      "playerId": "user_003",
+      "finalScore": 6,
+      "finalPosition": 3,
+      "xpGained": 75,
+      "coinsGained": 60,
+      "completedAt": "2025-06-02T20:45:00Z"
+    }
+  ],
+
+  "systemConfig": {
+    "maxPlayersPerGame": 8,
+    "defaultGameSettings": {
+      "mode": "classique",
+      "ambiance": "safe", 
+      "rounds": 5,
+      "maxPlayers": 6
+    },
+    "xpPerPoint": 25,
+    "coinsPerPoint": 10,
+    "levelThreshold": 100,
+    "gameCodeLength": 6,
+    "gameTimeout": 86400,
+    "phaseTimers": {
+      "intro": 5,
+      "answer": 60,
+      "vote": 45, 
+      "reveal": 3,
+      "results": 5
+    }
+  }
+}
