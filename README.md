@@ -2,6 +2,8 @@
 # KIADISA 🎮
 
 ![CI](https://github.com/fredbal1/qui-a-dit-quoi-51/actions/workflows/ci.yml/badge.svg)
+![Code Quality](https://img.shields.io/badge/code%20quality-automated-brightgreen)
+![Husky](https://img.shields.io/badge/husky-configured-blue)
 
 Jeu multijoueur en ligne de type "Qui a dit quoi ? / Bluff / Déduction sociale", basé sur des mini-jeux à tours, avec avatars, votes, réponses, scores, et boutique d'objets virtuels.
 
@@ -11,6 +13,22 @@ Jeu multijoueur en ligne de type "Qui a dit quoi ? / Bluff / Déduction sociale"
 npm install
 npm run dev
 ```
+
+## 🔧 Qualité du code
+
+Ce projet utilise une configuration automatisée pour garantir la qualité :
+
+- **Husky** : Hooks pre-commit automatiques
+- **GitHub Actions** : CI/CD complète avec tests E2E
+- **ESLint** : Linting automatique
+- **Prettier** : Formatage du code
+- **Vitest** : Tests unitaires
+- **Playwright** : Tests end-to-end
+
+### 🪝 Hooks configurés
+
+- **pre-commit** : formatage, linting, tests unitaires
+- **Simulation GitHub** : même validation sur chaque push
 
 ## 🎯 Objectif
 
@@ -57,10 +75,12 @@ src/
 npm run dev          # Serveur de développement
 npm run build        # Build de production
 npm run test         # Tests unitaires
-npm run test:e2e     # Tests end-to-end
-npm run lint         # Linting
-npm run format       # Formatage du code
+npm run test:e2e     # Tests end-to-end (via Playwright)
+npm run lint         # Linting ESLint
+npm run format       # Formatage Prettier
+npm run format:check # Vérification formatage
 npm run dev:reset    # Reset de l'environnement de dev
+npm run prepare      # Configuration Husky
 ```
 
 ## 📚 Documentation
@@ -79,6 +99,23 @@ npm run dev:reset    # Reset de l'environnement de dev
 - Tests unitaires avec Vitest
 - Tests E2E avec Playwright
 - Coverage automatique
+- CI/CD avec GitHub Actions
+
+## 🪝 Workflow de développement
+
+1. **Lovable.dev** : Développement et édition
+2. **GitHub Actions** : Validation automatique
+3. **Husky** : Hooks locaux (si applicable)
+4. **Déploiement** : Automatique sur main
+
+### 🔄 Pipeline CI/CD
+
+- ✅ Formatage (Prettier)
+- ✅ Linting (ESLint)  
+- ✅ Tests unitaires (Vitest)
+- ✅ Tests E2E (Playwright)
+- ✅ Build de production
+- ✅ Audit de sécurité
 
 ## 🚢 Déploiement
 
