@@ -81,7 +81,6 @@ echo "✅ Toutes les vérifications sont passées !"
 
 } catch (error) {
   console.error('❌ Erreur lors de la configuration de Husky:', error.message);
-  // Ne pas faire échouer l'installation si Husky ne peut pas être configuré
   console.log('⚠️  Husky ignoré, la CI GitHub Actions assurera la qualité du code');
   process.exit(0);
 }
