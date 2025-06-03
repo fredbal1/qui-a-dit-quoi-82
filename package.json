@@ -8,7 +8,12 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:e2e": "playwright test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "dev:reset": "ts-node scripts/dev-reset.ts",
+    "prepare": "node scripts/setup-husky.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
