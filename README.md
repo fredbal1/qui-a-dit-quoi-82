@@ -54,6 +54,25 @@ npm run prepare
 npm run dev
 ```
 
+### Configuration Supabase
+
+1. **Créer un projet Supabase** :
+   - Aller sur [supabase.com](https://supabase.com)
+   - Créer un nouveau projet
+   - Noter l'URL et la clé anon
+
+2. **Variables d'environnement** :
+   ```bash
+   # Pas besoin de .env avec Lovable - la configuration est automatique
+   # Les clés Supabase sont configurées via l'intégration native
+   ```
+
+3. **Exécuter les migrations** :
+   ```sql
+   -- Les tables sont déjà créées via l'interface Lovable
+   -- Vérifier dans Supabase Dashboard > Table Editor
+   ```
+
 ### Scripts disponibles
 
 ```bash
@@ -92,6 +111,63 @@ src/
 ```
 
 Voir [README_STRUCTURE.md](./README_STRUCTURE.md) pour plus de détails.
+
+## 🧪 Tests
+
+Le projet utilise **Vitest** pour les tests unitaires :
+
+```bash
+# Lancer tous les tests
+npm run test
+
+# Tests en mode watch
+npm run test:watch
+
+# Coverage
+npm run test:coverage
+```
+
+### Types de tests
+
+- **Hooks** : `src/__tests__/hooks/` - Tests des hooks personnalisés
+- **Composants** : `src/__tests__/components/` - Tests des composants UI
+- **Intégration** : Tests des flux utilisateur complets
+
+## 🔐 Sécurité
+
+### Row Level Security (RLS)
+
+Toutes les tables Supabase sont sécurisées avec RLS :
+
+- **games** : Visible uniquement aux joueurs participants
+- **game_players** : Chaque joueur voit ses propres données
+- **answers/votes** : Anonymat respecté jusqu'à la phase "reveal"
+- **profiles** : Données publiques limitées
+
+### Bonnes pratiques
+
+- Authentification obligatoire pour toutes les actions
+- Validation côté serveur via Supabase
+- Chiffrement des données sensibles
+- Audit des actions critiques
+
+## ⚡ Performance
+
+- **Lazy loading** des composants
+- **Memoization** des calculs coûteux
+- **Debouncing** des inputs utilisateur
+- **Optimistic updates** pour l'UX
+- **Bundle splitting** automatique
+
+## ♿ Accessibilité
+
+Le projet respecte les standards **WCAG 2.1 AA** :
+
+- Contrastes couleurs conformes
+- Navigation clavier complète
+- Attributs ARIA appropriés
+- Support des lecteurs d'écran
+- Responsive design inclusif
 
 ## 🤝 Contribution
 
