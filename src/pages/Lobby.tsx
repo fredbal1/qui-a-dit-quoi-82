@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGameStateFromSupabase } from '@/hooks/useGameStateFromSupabase';
@@ -17,7 +16,7 @@ const Lobby = () => {
   const { user, loading: authLoading } = useAuth();
   const { toast } = useToast();
   const { gameState, loading: gameLoading, error: gameError } = useGameStateFromSupabase(gameId || '');
-  const { currentPlayer, loading: playerLoading } = useCurrentPlayer(gameId || '');
+  const { player: currentPlayer, loading: playerLoading } = useCurrentPlayer(gameId || '');
 
   const floatingEmojis = ['🎉', '🎮', '🎲', '🎪', '⭐', '🚀', '💫', '🎭'];
   const [currentEmoji, setCurrentEmoji] = useState(0);
