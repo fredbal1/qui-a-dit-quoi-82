@@ -1,12 +1,9 @@
 
-#!/usr/bin/env node
-
 // Script simplifié pour éviter les erreurs d'installation
 // Configuration Husky basique pour le développement local
 
-const { execSync } = require('child_process');
-const { existsSync } = require('fs');
-const { join } = require('path');
+import { execSync } from 'child_process';
+import { existsSync } from 'fs';
 
 try {
   // Vérifier si nous sommes dans un environnement CI
