@@ -1,4 +1,5 @@
 
+
 import { renderHook } from '@testing-library/react';
 import { waitFor } from '@testing-library/dom';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
@@ -69,19 +70,23 @@ describe('useGameActions', () => {
   it('should create game and add host as player', async () => {
     const { result } = renderHook(() => useGameActions());
 
-    // Mock specific behavior for createGame test
-    const createGameMock = vi.fn(() => ({
-      insert: vi.fn(() => ({
-        select: vi.fn(() => ({
-          single: vi.fn(() => ({ 
-            data: { id: 'game-123', code: 'ABC123' }, 
-            error: null 
+    // Mock specific behavior for createGame test - override the default mock just for this test
+    const mockFromForCreateGame = vi.fn()
+      .mockReturnValueOnce({
+        insert: vi.fn(() => ({
+          select: vi.fn(() => ({
+            single: vi.fn(() => ({ 
+              data: { id: 'game-123', code: 'ABC123' }, 
+              error: null 
+            }))
           }))
         }))
-      }))
-    }));
+      })
+      .mockReturnValueOnce({
+        insert: vi.fn(() => ({ error: null }))
+      });
 
-    mockSupabase.from.mockImplementationOnce(createGameMock);
+    mockSupabase.from = mockFromForCreateGame;
 
     const response = await result.current.createGame({ totalRounds: 5 });
 
@@ -89,3 +94,4 @@ describe('useGameActions', () => {
     expect(response.gameCode).toBeTruthy();
   });
 });
+
