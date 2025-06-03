@@ -1,5 +1,6 @@
 
-import { renderHook, waitFor } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { useGameActions } from '@/hooks/useGameActions';
 
@@ -68,8 +69,8 @@ describe('useGameActions', () => {
   it('should create game and add host as player', async () => {
     const { result } = renderHook(() => useGameActions());
 
-    // Mock the chain for create game with complete mock structure
-    const mockInsertChain = {
+    // Mock specific behavior for createGame test
+    const createGameMock = vi.fn(() => ({
       insert: vi.fn(() => ({
         select: vi.fn(() => ({
           single: vi.fn(() => ({ 
@@ -77,17 +78,10 @@ describe('useGameActions', () => {
             error: null 
           }))
         }))
-      })),
-      update: vi.fn(() => ({ error: null })),
-      select: vi.fn(() => ({ 
-        eq: vi.fn(() => ({ 
-          single: vi.fn(() => ({ data: { host: 'user-123', phase: 'intro' }, error: null }))
-        }))
-      })),
-      upsert: vi.fn(() => ({ error: null }))
-    };
+      }))
+    }));
 
-    mockSupabase.from.mockReturnValueOnce(mockInsertChain);
+    mockSupabase.from.mockImplementationOnce(createGameMock);
 
     const response = await result.current.createGame({ totalRounds: 5 });
 
