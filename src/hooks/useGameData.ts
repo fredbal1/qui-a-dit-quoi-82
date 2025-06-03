@@ -46,7 +46,13 @@ export const useGameData = (gameCode: string) => {
         throw gameError;
       }
 
-      let enrichedGameData = { ...gameData };
+      // Create the enriched game data object
+      const enrichedGameData: GameWithDetails = {
+        ...gameData,
+        current_round_data: undefined,
+        answers: [],
+        votes: []
+      };
 
       // Fetch current round data if exists
       if (gameData.current_round) {
