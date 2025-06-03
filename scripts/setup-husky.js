@@ -1,8 +1,8 @@
 
-import { execSync } from 'node:child_process';
-import { mkdirSync, existsSync, writeFileSync, chmodSync } from 'node:fs';
-import { join } from 'node:path';
-import { cwd } from 'node:process';
+const { execSync } = require('child_process');
+const { mkdirSync, existsSync, writeFileSync, chmodSync } = require('fs');
+const { join } = require('path');
+const { cwd } = require('process');
 
 console.log('🔧 Configuration de Husky...');
 

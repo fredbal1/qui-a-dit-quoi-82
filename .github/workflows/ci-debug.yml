@@ -1,0 +1,88 @@
+
+name: CI Debug
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  debug-environment:
+    runs-on: ubuntu-latest
+    name: 🐛 Debug Environment
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: 🔍 Debug package.json scripts
+      run: |
+        echo "🔍 Vérification des scripts package.json..."
+        cat package.json | grep -A 20 '"scripts"'
+        
+    - name: 🔧 Install dependencies with debug
+      run: |
+        echo "📦 Installation des dépendances..."
+        npm ci --verbose
+        echo "✅ Installation terminée"
+        
+    - name: 🔍 List installed packages
+      run: |
+        echo "📋 Packages installés:"
+        npm list --depth=0
+        
+    - name: 🧪 Test basic commands
+      run: |
+        echo "🧪 Test des commandes de base..."
+        echo "- Prettier:"
+        npx prettier --version
+        echo "- ESLint:"
+        npx eslint --version
+        echo "- Vitest:"
+        npx vitest --version
+        echo "- Playwright:"
+        npx playwright --version
+        
+    - name: 📝 Check file structure
+      run: |
+        echo "📁 Structure des fichiers critiques:"
+        ls -la
+        echo "📁 Contenu src/:"
+        ls -la src/
+        echo "📁 Contenu tests:"
+        find . -name "*.test.*" -o -name "*.spec.*"
+
+  minimal-tests:
+    runs-on: ubuntu-latest
+    name: 🧪 Minimal Tests
+    needs: debug-environment
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: 🔧 Install dependencies
+      run: npm ci
+        
+    - name: 🧪 Run unit tests only
+      run: |
+        echo "🧪 Exécution des tests unitaires uniquement..."
+        npm run test -- --reporter=verbose
+        
+    - name: 🏗️ Test build
+      run: |
+        echo "🏗️ Test de construction..."
+        npm run build

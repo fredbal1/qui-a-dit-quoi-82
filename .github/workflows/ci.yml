@@ -23,22 +23,55 @@ jobs:
         cache: 'npm'
         
     - name: 🔧 Install dependencies
-      run: npm ci
-      
+      run: |
+        echo "📦 Installation des dépendances..."
+        npm ci
+        echo "✅ Dépendances installées"
+        
     - name: 📝 Check Prettier formatting
-      run: npx prettier --check .
-      
+      run: |
+        echo "📝 Vérification du formatage Prettier..."
+        npx prettier --check . || {
+          echo "❌ Erreur de formatage détectée"
+          echo "💡 Exécutez 'npm run format' pour corriger"
+          exit 1
+        }
+        echo "✅ Formatage correct"
+        
     - name: 🔍 Run ESLint
-      run: npx eslint . --ext .ts,.tsx
-      
+      run: |
+        echo "🔍 Exécution d'ESLint..."
+        npx eslint . --ext .ts,.tsx || {
+          echo "❌ Erreurs de linting détectées"
+          exit 1
+        }
+        echo "✅ Linting réussi"
+        
     - name: 🧪 Run unit tests
-      run: npm run test
-      
+      run: |
+        echo "🧪 Exécution des tests unitaires..."
+        npm run test || {
+          echo "❌ Tests unitaires échoués"
+          exit 1
+        }
+        echo "✅ Tests unitaires réussis"
+        
     - name: 🏗️ Build project
-      run: npm run build
-      
+      run: |
+        echo "🏗️ Construction du projet..."
+        npm run build || {
+          echo "❌ Échec de la construction"
+          exit 1
+        }
+        echo "✅ Construction réussie"
+        
     - name: 🔒 Security audit
-      run: npm audit --audit-level moderate
+      run: |
+        echo "🔒 Audit de sécurité..."
+        npm audit --audit-level moderate || {
+          echo "⚠️ Vulnérabilités détectées mais non bloquantes"
+        }
+        echo "✅ Audit terminé"
       continue-on-error: true
 
   e2e-tests:
@@ -57,14 +90,26 @@ jobs:
         cache: 'npm'
         
     - name: 🔧 Install dependencies
-      run: npm ci
-      
+      run: |
+        echo "📦 Installation des dépendances pour E2E..."
+        npm ci
+        echo "✅ Dépendances installées"
+        
     - name: 📦 Install Playwright Browsers
-      run: npx playwright install --with-deps
-      
+      run: |
+        echo "📦 Installation des navigateurs Playwright..."
+        npx playwright install --with-deps
+        echo "✅ Navigateurs installés"
+        
     - name: 🎭 Run E2E tests
-      run: npx playwright test
-      
+      run: |
+        echo "🎭 Exécution des tests E2E..."
+        npx playwright test || {
+          echo "❌ Tests E2E échoués"
+          exit 1
+        }
+        echo "✅ Tests E2E réussis"
+        
     - name: 📸 Upload test results
       uses: actions/upload-artifact@v4
       if: failure()
@@ -90,11 +135,17 @@ jobs:
         cache: 'npm'
         
     - name: 🔧 Install dependencies
-      run: npm ci
-      
+      run: |
+        echo "📦 Installation des dépendances pour le déploiement..."
+        npm ci
+        echo "✅ Dépendances installées"
+        
     - name: 🏗️ Build for production
-      run: npm run build
-      
+      run: |
+        echo "🏗️ Construction pour la production..."
+        npm run build
+        echo "✅ Construction de production réussie"
+        
     - name: 📦 Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -119,15 +170,27 @@ jobs:
         cache: 'npm'
         
     - name: 🔧 Install dependencies
-      run: npm ci
-      
+      run: |
+        echo "📦 Installation des dépendances pour simulation pre-commit..."
+        npm ci
+        echo "✅ Dépendances installées"
+        
     - name: 🪝 Simulate pre-commit hook
       run: |
         echo "🔍 Simulation du hook pre-commit..."
         echo "📝 Vérification du formatage..."
-        npx prettier --check .
+        npx prettier --check . || {
+          echo "❌ Formatage incorrect"
+          exit 1
+        }
         echo "🔍 Linting du code..."
-        npx eslint . --ext .ts,.tsx
+        npx eslint . --ext .ts,.tsx || {
+          echo "❌ Erreurs de linting"
+          exit 1
+        }
         echo "🧪 Exécution des tests..."
-        npm run test
+        npm run test || {
+          echo "❌ Tests échoués"
+          exit 1
+        }
         echo "✅ Simulation pre-commit réussie !"
