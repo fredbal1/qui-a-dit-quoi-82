@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AnimatedBackground from '@/components/AnimatedBackground';
@@ -7,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Slider } from '@/components/ui/slider';
 import { Label } from '@/components/ui/label';
+import { useGameActions } from '@/hooks/useGameActions';
+import { useAuth } from '@/hooks/useAuth';
 import { 
   ArrowLeft, 
   Users, 
@@ -21,11 +22,21 @@ import {
 
 const CreateGame = () => {
   const navigate = useNavigate();
+  const { user, loading: authLoading } = useAuth();
+  const { createGame, loading: gameLoading } = useGameActions();
+  
   const [twoPlayersOnly, setTwoPlayersOnly] = useState(false);
   const [selectedMode, setSelectedMode] = useState<string>('');
   const [selectedAmbiance, setSelectedAmbiance] = useState<string>('');
   const [selectedMiniGames, setSelectedMiniGames] = useState<string[]>([]);
   const [rounds, setRounds] = useState([5]);
+
+  // Redirection si pas connecté
+  React.useEffect(() => {
+    if (!authLoading && !user) {
+      navigate('/auth');
+    }
+  }, [user, authLoading, navigate]);
 
   const modes = [
     {
@@ -127,13 +138,34 @@ const CreateGame = () => {
 
   const canCreateGame = selectedMode && selectedAmbiance && selectedMiniGames.length > 0;
 
-  const handleCreateGame = () => {
-    if (canCreateGame) {
-      // Create game logic here
-      const gameId = Math.random().toString(36).substring(2, 8).toUpperCase();
-      navigate(`/lobby/${gameId}`);
+  const handleCreateGame = async () => {
+    if (!canCreateGame || !user) return;
+
+    const gameSettings = {
+      mode: selectedMode,
+      ambiance: selectedAmbiance,
+      miniGames: selectedMiniGames,
+      totalRounds: rounds[0],
+      maxPlayers: twoPlayersOnly ? 2 : 6,
+      twoPlayersOnly
+    };
+
+    const result = await createGame(gameSettings);
+    
+    if (result.success) {
+      navigate(`/lobby/${result.gameCode}`);
     }
   };
+
+  if (authLoading) {
+    return (
+      <AnimatedBackground variant="create">
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-white text-xl">Chargement...</div>
+        </div>
+      </AnimatedBackground>
+    );
+  }
 
   return (
     <AnimatedBackground variant="create">
@@ -305,11 +337,11 @@ const CreateGame = () => {
         {/* Create Button */}
         <Button
           onClick={handleCreateGame}
-          disabled={!canCreateGame}
+          disabled={!canCreateGame || gameLoading}
           className="w-full glass-button text-white border-white/30 hover:bg-white/20 text-lg py-6 font-poppins font-semibold"
         >
           <Play className="mr-3 w-6 h-6" />
-          Lancer la partie 🚀
+          {gameLoading ? 'Création...' : 'Lancer la partie 🚀'}
         </Button>
       </div>
     </AnimatedBackground>
