@@ -1,26 +1,25 @@
 
-import { execSync } from 'child_process';
-import fs from 'fs';
-import path from 'path';
+import { execSync } from 'node:child_process';
+import { mkdirSync, existsSync, writeFileSync, chmodSync } from 'node:fs';
+import { join } from 'node:path';
+import { cwd } from 'node:process';
 
 console.log('🔧 Configuration de Husky...');
 
 try {
-  // Créer le dossier .husky s'il n'existe pas
-  const huskyDir = path.join(process.cwd(), '.husky');
-  if (!fs.existsSync(huskyDir)) {
-    fs.mkdirSync(huskyDir, { recursive: true });
+  const huskyDir = join(cwd(), '.husky');
+  const huskyUnderscoreDir = join(huskyDir, '_');
+
+  if (!existsSync(huskyDir)) {
+    mkdirSync(huskyDir, { recursive: true });
     console.log('📁 Dossier .husky créé');
   }
 
-  // Créer le dossier _
-  const huskyUnderscoreDir = path.join(huskyDir, '_');
-  if (!fs.existsSync(huskyUnderscoreDir)) {
-    fs.mkdirSync(huskyUnderscoreDir, { recursive: true });
+  if (!existsSync(huskyUnderscoreDir)) {
+    mkdirSync(huskyUnderscoreDir, { recursive: true });
     console.log('📁 Dossier .husky/_ créé');
   }
 
-  // Créer le fichier husky.sh
   const huskyShContent = `#!/usr/bin/env sh
 if [ -z "$husky_skip_init" ]; then
   debug () {
@@ -48,11 +47,10 @@ if [ -z "$husky_skip_init" ]; then
 fi
 `;
 
-  fs.writeFileSync(path.join(huskyUnderscoreDir, 'husky.sh'), huskyShContent);
-  fs.chmodSync(path.join(huskyUnderscoreDir, 'husky.sh'), '755');
+  writeFileSync(join(huskyUnderscoreDir, 'husky.sh'), huskyShContent);
+  chmodSync(join(huskyUnderscoreDir, 'husky.sh'), 0o755);
   console.log('📄 Fichier husky.sh créé');
 
-  // Mettre à jour le pre-commit existant avec les bonnes commandes
   const preCommitContent = `#!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
@@ -70,8 +68,8 @@ npm run test
 echo "✅ Toutes les vérifications sont passées !"
 `;
 
-  fs.writeFileSync(path.join(huskyDir, 'pre-commit'), preCommitContent);
-  fs.chmodSync(path.join(huskyDir, 'pre-commit'), '755');
+  writeFileSync(join(huskyDir, 'pre-commit'), preCommitContent);
+  chmodSync(join(huskyDir, 'pre-commit'), 0o755);
   console.log('🪝 Hook pre-commit configuré');
 
   console.log('✅ Husky configuré avec succès !');
@@ -80,7 +78,7 @@ echo "✅ Toutes les vérifications sont passées !"
   console.log('🚀 Prêt pour GitHub !');
 
 } catch (error) {
-  console.error('❌ Erreur lors de la configuration de Husky:', error.message);
+  console.error('❌ Erreur lors de la configuration de Husky :', error.message);
   console.log('⚠️  Husky ignoré, la CI GitHub Actions assurera la qualité du code');
   process.exit(0);
 }
