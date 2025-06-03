@@ -1,6 +1,8 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useJoinGame } from '@/hooks/useJoinGame';
+import { useAuth } from '@/hooks/useAuth';
 import AnimatedBackground from '@/components/AnimatedBackground';
 import GlassCard from '@/components/GlassCard';
 import { Button } from '@/components/ui/button';
@@ -10,9 +12,17 @@ import { ArrowLeft, Users, Check, X } from 'lucide-react';
 
 const JoinGame = () => {
   const navigate = useNavigate();
+  const { user, loading: authLoading } = useAuth();
+  const { joinGame, loading: joinLoading } = useJoinGame();
   const [gameCode, setGameCode] = useState('');
-  const [isValidating, setIsValidating] = useState(false);
   const [validationResult, setValidationResult] = useState<'valid' | 'invalid' | null>(null);
+
+  // Redirection si pas connecté
+  React.useEffect(() => {
+    if (!authLoading && !user) {
+      navigate('/auth');
+    }
+  }, [user, authLoading, navigate]);
 
   const handleCodeChange = (value: string) => {
     const formattedCode = value.toUpperCase().slice(0, 6);
@@ -20,28 +30,23 @@ const JoinGame = () => {
     setValidationResult(null);
   };
 
-  const validateCode = async () => {
-    if (gameCode.length !== 6) return;
+  const handleJoinGame = async () => {
+    if (gameCode.length !== 6 || !user) return;
     
-    setIsValidating(true);
+    const result = await joinGame(gameCode);
     
-    // Simulate validation delay
-    setTimeout(() => {
-      // Mock validation - codes starting with 'A' are valid
-      const isValid = gameCode.startsWith('A') || gameCode === 'DEMO01';
-      setValidationResult(isValid ? 'valid' : 'invalid');
-      setIsValidating(false);
-      
-      if (isValid) {
-        setTimeout(() => {
-          navigate(`/lobby/${gameCode}`);
-        }, 1000);
-      }
-    }, 1500);
+    if (result.success) {
+      setValidationResult('valid');
+      setTimeout(() => {
+        navigate(`/lobby/${result.gameCode}`);
+      }, 1000);
+    } else {
+      setValidationResult('invalid');
+    }
   };
 
   const getValidationIcon = () => {
-    if (isValidating) {
+    if (joinLoading) {
       return <div className="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full" />;
     }
     if (validationResult === 'valid') {
@@ -58,10 +63,20 @@ const JoinGame = () => {
       return <span className="text-green-400">✅ Code valide ! Connexion...</span>;
     }
     if (validationResult === 'invalid') {
-      return <span className="text-red-400">❌ Code invalide</span>;
+      return <span className="text-red-400">❌ Code invalide ou partie non disponible</span>;
     }
     return null;
   };
+
+  if (authLoading) {
+    return (
+      <AnimatedBackground variant="join">
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-white text-xl">Chargement...</div>
+        </div>
+      </AnimatedBackground>
+    );
+  }
 
   return (
     <AnimatedBackground variant="join">
@@ -118,29 +133,11 @@ const JoinGame = () => {
               )}
 
               <Button
-                onClick={validateCode}
-                disabled={gameCode.length !== 6 || isValidating}
+                onClick={handleJoinGame}
+                disabled={gameCode.length !== 6 || joinLoading}
                 className="w-full glass-button text-white border-white/30 hover:bg-white/20 font-poppins font-semibold"
               >
-                {isValidating ? 'Vérification...' : 'Rejoindre 🎮'}
-              </Button>
-            </div>
-          </GlassCard>
-
-          {/* Demo Code */}
-          <GlassCard className="bg-blue-600/30 border-blue-300/50 animate-slide-up">
-            <div className="text-center">
-              <h3 className="font-poppins font-semibold text-white mb-2">
-                💡 Code de démonstration
-              </h3>
-              <p className="text-white/90 text-sm font-inter mb-3">
-                Pour tester l'application, utilise le code :
-              </p>
-              <Button
-                onClick={() => handleCodeChange('DEMO01')}
-                className="bg-white/20 border-white/50 text-white hover:bg-white/30 font-mono tracking-wider text-lg px-6 py-2"
-              >
-                DEMO01
+                {joinLoading ? 'Vérification...' : 'Rejoindre 🎮'}
               </Button>
             </div>
           </GlassCard>

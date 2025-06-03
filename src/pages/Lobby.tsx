@@ -1,6 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useGameStateFromSupabase } from '@/hooks/useGameStateFromSupabase';
+import { useCurrentPlayer } from '@/hooks/useCurrentPlayer';
+import { useAuth } from '@/hooks/useAuth';
 import AnimatedBackground from '@/components/AnimatedBackground';
 import GlassCard from '@/components/GlassCard';
 import { Button } from '@/components/ui/button';
@@ -11,37 +14,48 @@ import { useToast } from '@/hooks/use-toast';
 const Lobby = () => {
   const navigate = useNavigate();
   const { gameId } = useParams();
+  const { user, loading: authLoading } = useAuth();
   const { toast } = useToast();
-  const [user, setUser] = useState<any>(null);
-  const [isHost, setIsHost] = useState(false);
-  const [players, setPlayers] = useState([
-    { id: '1', pseudo: 'Alex', avatar: '🎮', isHost: true },
-    { id: '2', pseudo: 'Marie', avatar: '🌟', isHost: false },
-    { id: '3', pseudo: 'Julien', avatar: '🎯', isHost: false }
-  ]);
+  const { gameState, loading: gameLoading, error: gameError } = useGameStateFromSupabase(gameId || '');
+  const { currentPlayer, loading: playerLoading } = useCurrentPlayer(gameId || '');
 
   const floatingEmojis = ['🎉', '🎮', '🎲', '🎪', '⭐', '🚀', '💫', '🎭'];
   const [currentEmoji, setCurrentEmoji] = useState(0);
 
+  const waitingMessages = [
+    "🎭 En attente des autres joueurs...",
+    "🎪 Préparez-vous à découvrir vos secrets !",
+    "🎲 La partie va bientôt commencer...",
+    "🎮 Qui sera le maître du bluff ?"
+  ];
+
+  const [currentMessage, setCurrentMessage] = useState(0);
+
+  // Redirection si pas connecté
   useEffect(() => {
-    const userData = localStorage.getItem('kiadisa_user');
-    if (!userData) {
+    if (!authLoading && !user) {
       navigate('/auth');
       return;
     }
-    const parsedUser = JSON.parse(userData);
-    setUser(parsedUser);
-    
-    // Simulate if user is host (first player)
-    setIsHost(players[0].pseudo === parsedUser.pseudo);
+  }, [user, authLoading, navigate]);
 
-    // Rotate floating emojis
+  // Rotate floating emojis
+  useEffect(() => {
     const interval = setInterval(() => {
       setCurrentEmoji((prev) => (prev + 1) % floatingEmojis.length);
     }, 2000);
 
     return () => clearInterval(interval);
-  }, [navigate]);
+  }, []);
+
+  // Rotate waiting messages
+  useEffect(() => {
+    const messageInterval = setInterval(() => {
+      setCurrentMessage((prev) => (prev + 1) % waitingMessages.length);
+    }, 3000);
+
+    return () => clearInterval(messageInterval);
+  }, []);
 
   const copyGameCode = () => {
     navigator.clipboard.writeText(gameId || '');
@@ -64,29 +78,40 @@ const Lobby = () => {
   };
 
   const startGame = () => {
-    if (isHost) {
+    if (currentPlayer?.is_host) {
       navigate(`/game/${gameId}`);
     }
   };
 
-  const waitingMessages = [
-    "🎭 En attente des autres joueurs...",
-    "🎪 Préparez-vous à découvrir vos secrets !",
-    "🎲 La partie va bientôt commencer...",
-    "🎮 Qui sera le maître du bluff ?"
-  ];
+  // Loading states
+  if (authLoading || gameLoading || playerLoading) {
+    return (
+      <AnimatedBackground variant="lobby">
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-white text-xl">Chargement...</div>
+        </div>
+      </AnimatedBackground>
+    );
+  }
 
-  const [currentMessage, setCurrentMessage] = useState(0);
+  // Error state
+  if (gameError || !gameState) {
+    return (
+      <AnimatedBackground variant="lobby">
+        <div className="min-h-screen flex items-center justify-center">
+          <GlassCard className="text-center">
+            <div className="text-red-400 mb-4">Erreur : Partie introuvable</div>
+            <Button onClick={() => navigate('/dashboard')}>
+              Retour au Dashboard
+            </Button>
+          </GlassCard>
+        </div>
+      </AnimatedBackground>
+    );
+  }
 
-  useEffect(() => {
-    const messageInterval = setInterval(() => {
-      setCurrentMessage((prev) => (prev + 1) % waitingMessages.length);
-    }, 3000);
-
-    return () => clearInterval(messageInterval);
-  }, []);
-
-  if (!user) return null;
+  const isHost = currentPlayer?.is_host || false;
+  const players = gameState.game_players || [];
 
   return (
     <AnimatedBackground variant="lobby">
@@ -107,7 +132,7 @@ const Lobby = () => {
             </h1>
           </div>
           <Badge className="glass-card text-white border-white/30 font-mono tracking-wider">
-            {gameId}
+            {gameState.code}
           </Badge>
         </div>
 
@@ -117,7 +142,7 @@ const Lobby = () => {
             Code de la partie
           </h2>
           <div className="text-3xl font-mono font-bold text-white mb-4 tracking-widest">
-            {gameId}
+            {gameState.code}
           </div>
           <div className="flex space-x-3 justify-center">
             <Button
@@ -160,17 +185,17 @@ const Lobby = () => {
                   <div className="flex items-center space-x-4">
                     <div className="text-3xl animate-float"
                          style={{ animationDelay: `${index * 0.5}s` }}>
-                      {player.avatar}
+                      🎮
                     </div>
                     <div>
                       <h3 className="font-poppins font-semibold text-white flex items-center">
-                        {player.pseudo}
-                        {player.isHost && (
+                        Joueur {index + 1}
+                        {player.is_host && (
                           <Crown className="ml-2 w-4 h-4 text-yellow-300" />
                         )}
                       </h3>
                       <p className="text-white/80 text-sm font-inter">
-                        {player.isHost ? 'Créateur de la partie' : 'Joueur'}
+                        {player.is_host ? 'Créateur de la partie' : 'Joueur'}
                       </p>
                     </div>
                   </div>
@@ -192,7 +217,7 @@ const Lobby = () => {
         </GlassCard>
 
         {/* Start Game Button (Host Only) */}
-        {isHost && (
+        {isHost && gameState.status === 'waiting' && (
           <Button
             onClick={startGame}
             className="w-full glass-button text-white border-white/30 hover:bg-white/20 text-lg py-6 font-poppins font-semibold animate-pulse-glow"
@@ -208,6 +233,21 @@ const Lobby = () => {
             <p className="text-blue-100 font-inter">
               👑 Seul le créateur de la partie peut la lancer
             </p>
+          </GlassCard>
+        )}
+
+        {/* Game started message */}
+        {gameState.status === 'active' && (
+          <GlassCard className="text-center bg-green-500/20 border-green-300/30">
+            <p className="text-green-100 font-inter mb-4">
+              🎮 La partie a commencé !
+            </p>
+            <Button
+              onClick={() => navigate(`/game/${gameId}`)}
+              className="bg-green-500/30 border-green-300/50 text-white hover:bg-green-500/50"
+            >
+              Rejoindre la partie
+            </Button>
           </GlassCard>
         )}
       </div>
