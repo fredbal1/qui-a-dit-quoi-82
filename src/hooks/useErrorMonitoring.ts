@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 
-interface ErrorEvent {
+interface AppErrorEvent {
   type: 'game_action' | 'realtime' | 'auth' | 'network';
   message: string;
   context?: Record<string, any>;
@@ -12,7 +12,7 @@ interface ErrorEvent {
 export const useErrorMonitoring = () => {
   const { toast } = useToast();
 
-  const logError = (error: ErrorEvent) => {
+  const logError = (error: AppErrorEvent) => {
     // Log to console for development
     console.error('[KIADISA Error]', error);
 
@@ -63,14 +63,15 @@ export const useErrorMonitoring = () => {
 
   useEffect(() => {
     // Capturer les erreurs JavaScript non gérées
-    const handleError = (event: ErrorEvent) => {
+    const handleError = (event: Event) => {
+      const errorEvent = event as any; // Type assertion pour accéder aux propriétés
       logError({
         type: 'network',
-        message: event.message || 'Erreur inconnue',
+        message: errorEvent.message || 'Erreur inconnue',
         context: { 
-          filename: event.filename,
-          lineno: event.lineno,
-          colno: event.colno
+          filename: errorEvent.filename,
+          lineno: errorEvent.lineno,
+          colno: errorEvent.colno
         },
         timestamp: new Date().toISOString()
       });
