@@ -109,7 +109,7 @@ export const useGameActions = () => {
         throw new Error('Utilisateur non connecté');
       }
 
-      // Verify user is host
+      // Verify user is host (using optimized index on host)
       const { data: gameData, error: gameError } = await supabase
         .from('games')
         .select('host, phase, current_round, total_rounds')
